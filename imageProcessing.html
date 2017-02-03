@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <meta http-equiv="content-type" content="text/html; charset=UTF8">
+        <link rel="stylesheet" type="text/css" href="imageProcessing.css"/>        
+        <script src="imageProcessing.js"></script>
+</head>
+
+<body onload="webglStart();">
+    <div id="actual">
+        <canvas id="canvas" width="512" height="512">
+        </canvas>        
+        <p>Actual</p>
+    </div>
+    <div id="expected">
+        <image src="expected.png">
+        <p>Expected</p>
+    </div>
+    <div id="code">
+        <textarea id="fragmentCode">
+precision mediump float;
+
+varying vec2 fUVs;
+
+uniform sampler2D uImage;
+
+vec4 colorTransform(vec4 pixel) {
+    //TODO: IMPLEMENT THIS
+    return pixel;
+}
+
+void main() {
+    gl_FragColor = colorTransform(texture2D(uImage, fUVs));
+}
+        </textarea>
+        <p>
+            <button onclick="triggerProgramReload()" id="reload">Reload</button>
+            <button onclick="triggerProgramReset()" id="reset">Reset</button>
+        </p>
+        <textarea class="hiddenCode" id="vertexCode">
+precision mediump float;
+
+attribute vec2 vPos;
+attribute vec2 vUVs;
+
+varying vec2 fUVs;
+
+uniform mat4 uMvp;
+
+void main() {
+    gl_Position = uMvp * vec4(vPos, 0.0, 1.0);
+    fUVs = vUVs;
+}
+        </textarea>
+        <textarea class="hiddenCode" id="originalFragmentCode">
+precision mediump float;
+
+varying vec2 fUVs;
+
+uniform sampler2D uImage;
+
+vec4 colorTransform(vec4 pixel) {
+    //TODO: IMPLEMENT THIS
+    return pixel;
+}
+
+void main() {
+    gl_FragColor = colorTransform(texture2D(uImage, fUVs));
+}        
+        </textarea>
+    </div>    
+</body>
+</html>
